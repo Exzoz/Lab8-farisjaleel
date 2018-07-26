@@ -1,23 +1,34 @@
 package edu.luc.cs271.wordcount;
 
 import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Map.Entry;
 
 public class Main {
 
-  public static void main(final String[] args) throws InterruptedException {
+  public static void main(final String[] args) throws InterruptedException, FileNotFoundException {
 
-    // set up the scanner so that it separates words based on space and punctuation
-    final Scanner input = new Scanner(System.in).useDelimiter("[^\\p{Alnum}]+");
+    File file = new File("src/book.rtf");
+    final Scanner input = new Scanner (file).useDelimiter("[^\\p{Alnum}]+");
 
-    // TODO complete this main program
-    // 1. create a WordCounter instance
-    // 2. use this to count the words in the input
-    // 3. determine the size of the resulting map
-    // 4. create an ArrayList of that size and
-    // 5. store the map's entries in it (these are of type Map.Entry<String, Integer>
-    // 6. sort the ArrayList in descending order by count
-    //    using Collections.sort and an instance of the provided comparator (after fixing the latter)
-    // 7. print the (up to) ten most frequent words in the text
+    //1.
+    WordCounter wordCounter = new WordCounter(new HashMap<String, Integer>());
+    //2.
+    wordCounter.countWords(input);
+    //3.
+    Map<String, Integer> map = wordCounter.getCounts();
+    System.out.println("Map size: " + map.size());
+    //4.
+    List<Entry<String, Integer>> list = new ArrayList(map.size());
+    //5.
+    list.addAll(map.entrySet());
+    //6.
+    Collections.sort(list, new DescendingByCount());
+    //7.
+    for (int i = 0; i < 10; i++) {
+      System.out.println(list.get(i).getValue() + "=" + list.get(i).getKey());
+    }
 
   }
 }

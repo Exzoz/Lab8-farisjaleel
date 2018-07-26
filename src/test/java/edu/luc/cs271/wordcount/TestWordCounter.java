@@ -1,6 +1,11 @@
 package edu.luc.cs271.wordcount;
 
 import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -8,35 +13,32 @@ import org.junit.Test;
 
 public class TestWordCounter {
 
-  // TODO complete this test class
-
-  // TODO declare a reference to the SUT (system under test), i.e., WordCounter
+  private WordCounter wordCounter;
 
   @Before
   public void setUp() {
-    // TODO create the SUT instance
+    wordCounter = new WordCounter(new HashMap<String, Integer>());
   }
 
   @After
   public void tearDown() {
-    // TODO set the SUT instance to null
+    wordCounter = null;
   }
 
   @Test
   public void testGetCountEmpty() {
-
-    // TODO verify that the SUT initially returns an empty map
-    fail();
+    assertTrue(wordCounter.getCounts().isEmpty());
 
   }
 
   @Test
   public void testGetCountNonEmpty() {
-
-    // TODO run the SUT on a specific String iterator with some repeated words,
-    // then use assertions to verify the correct counts
-    // do this for at least two words in the iterator and two not in the iterator
-    fail();
+    wordCounter.countWords(Arrays.asList("test", "test", "test", "test2", "test2").iterator());
+    Map counts = wordCounter.getCounts();
+    assertEquals(3, counts.get("test"));
+    assertEquals(2, counts.get("test2"));
+    assertNull(counts.get("random"));
+    assertNull(counts.get("random2"));
 
   }
 }
